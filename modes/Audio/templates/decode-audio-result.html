@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+{% block title %}Audio Decode Result — StegaVault{% endblock %}
+{% block content %}
+<div class="container">
+  <div class="panel">
+    <div class="panel-title"><i class="bi bi-check-circle-fill text-success"></i> Decoding Complete</div>
+
+    {% if success %}
+    <div class="alert alert-success d-flex align-items-center gap-2">
+      <i class="bi bi-shield-check-fill fs-5"></i>
+      <div>Hidden message extracted from <strong>{{ filename }}</strong>.</div>
+    </div>
+
+    <div class="result-card mb-4">
+      <div class="result-label">Secret Message</div>
+      <div class="message-box" id="msgBox">{{ message }}</div>
+      <button class="btn btn-outline-secondary btn-sm mt-2" onclick="copyMsg()">
+        <i class="bi bi-clipboard me-1"></i> Copy to clipboard
+      </button>
+      <span id="copyFeedback" class="text-success ms-2 small" style="display:none">Copied!</span>
+    </div>
+    {% endif %}
+
+    <div class="d-flex gap-3">
+      <a href="/audio/decode" class="btn btn-primary"><i class="bi bi-arrow-repeat me-1"></i> Decode Another</a>
+      <a href="/" class="btn btn-outline-secondary">Home</a>
+    </div>
+  </div>
+</div>
+{% endblock %}
+{% block extra_scripts %}
+<script>
+function copyMsg() {
+  const text = document.getElementById('msgBox').innerText;
+  navigator.clipboard.writeText(text).then(() => {
+    const fb = document.getElementById('copyFeedback');
+    fb.style.display = 'inline';
+    setTimeout(() => fb.style.display = 'none', 2000);
+  });
+}
+</script>
+{% endblock %}

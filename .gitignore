@@ -1,0 +1,13 @@
+__pycache__/
+*.py[cod]
+.env
+.env.*
+*.avi
+*.wav
+*_tmp*
+*encoded*
+*encrypted*
+*decrypted*
+*debug*
+venv/
+env/

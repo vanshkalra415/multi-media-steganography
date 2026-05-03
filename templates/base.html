@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}StegaVault{% endblock %}</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #6c47ff;
+            --primary-dark: #4f2fcf;
+            --surface: #f8f7ff;
+            --card-bg: #ffffff;
+            --text-muted-custom: #6b7280;
+        }
+
+        body {
+            background: var(--surface);
+            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+            min-height: 100vh;
+        }
+
+        /* ── Navbar ── */
+        .navbar {
+            background: linear-gradient(135deg, #1a1033 0%, #2d1b69 100%);
+            padding: 14px 0;
+            box-shadow: 0 2px 20px rgba(108,71,255,.25);
+        }
+        .navbar-brand {
+            font-weight: 700;
+            font-size: 1.3rem;
+            letter-spacing: .5px;
+            color: #fff !important;
+        }
+        .navbar-brand i { color: #a78bfa; }
+        .nav-link { color: rgba(255,255,255,.75) !important; font-size: .9rem; }
+        .nav-link:hover { color: #fff !important; }
+
+        /* ── Hero ── */
+        .hero {
+            background: linear-gradient(135deg, #1a1033 0%, #2d1b69 60%, #6c47ff 100%);
+            color: #fff;
+            padding: 3rem 0 2.5rem;
+            text-align: center;
+        }
+        .hero h1 { font-size: 2.4rem; font-weight: 800; }
+        .hero p   { opacity: .8; font-size: 1.1rem; }
+
+        /* ── Mode Cards ── */
+        .mode-card {
+            background: var(--card-bg);
+            border-radius: 18px;
+            padding: 2rem 1.5rem;
+            text-align: center;
+            box-shadow: 0 4px 24px rgba(0,0,0,.06);
+            transition: transform .2s, box-shadow .2s;
+            border: 1.5px solid #f0eeff;
+            height: 100%;
+        }
+        .mode-card:hover {
+            transform: translateY(-6px);
+            box-shadow: 0 12px 36px rgba(108,71,255,.18);
+        }
+        .mode-icon {
+            width: 72px; height: 72px;
+            background: linear-gradient(135deg, #ede9fe, #ddd6fe);
+            border-radius: 20px;
+            display: flex; align-items: center; justify-content: center;
+            margin: 0 auto 1rem;
+            font-size: 2rem;
+        }
+        .mode-card h5 { font-weight: 700; color: #1a1033; }
+        .mode-card p  { color: var(--text-muted-custom); font-size: .88rem; }
+        .btn-encode { background: var(--primary); color: #fff; border: none; border-radius: 8px; }
+        .btn-encode:hover { background: var(--primary-dark); color: #fff; }
+        .btn-decode { background: transparent; color: var(--primary); border: 2px solid var(--primary); border-radius: 8px; }
+        .btn-decode:hover { background: var(--primary); color: #fff; }
+
+        /* ── Form Panel ── */
+        .panel {
+            background: #fff;
+            border-radius: 18px;
+            padding: 2.5rem;
+            box-shadow: 0 4px 24px rgba(0,0,0,.07);
+            border: 1.5px solid #f0eeff;
+            max-width: 680px;
+            margin: 2.5rem auto;
+        }
+        .panel-title {
+            font-size: 1.6rem; font-weight: 800; color: #1a1033;
+            display: flex; align-items: center; gap: .6rem;
+            margin-bottom: 1.5rem;
+        }
+        .panel-title i { color: var(--primary); }
+
+        /* ── Breadcrumb ── */
+        .breadcrumb { background: none; padding: 0; margin-bottom: 0; }
+        .breadcrumb-item a { color: var(--primary); text-decoration: none; }
+
+        /* ── Form Controls ── */
+        .form-label { font-weight: 600; color: #374151; margin-bottom: .4rem; }
+        .form-control, .form-control-file, input[type="file"] {
+            border-radius: 10px;
+            border: 1.5px solid #e5e7eb;
+            padding: .65rem 1rem;
+            font-size: .95rem;
+            transition: border-color .2s, box-shadow .2s;
+        }
+        .form-control:focus { border-color: var(--primary); box-shadow: 0 0 0 3px rgba(108,71,255,.12); }
+        textarea.form-control { resize: vertical; min-height: 110px; }
+        .file-label {
+            display: block; border: 2px dashed #d1d5db; border-radius: 12px;
+            padding: 1.8rem; text-align: center; cursor: pointer;
+            color: var(--text-muted-custom); transition: border-color .2s, background .2s;
+        }
+        .file-label:hover { border-color: var(--primary); background: #f5f3ff; }
+        .file-label i { font-size: 2rem; color: var(--primary); display: block; margin-bottom: .4rem; }
+        .file-label.has-file { border-color: #10b981; background: #ecfdf5; color: #065f46; }
+        .file-label.has-file i { color: #10b981; }
+        input[type="file"].d-none { display: none; }
+
+        /* ── Buttons ── */
+        .btn-primary {
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            border: none; border-radius: 10px; padding: .7rem 2rem;
+            font-weight: 600; font-size: 1rem; letter-spacing: .3px;
+        }
+        .btn-primary:hover { background: linear-gradient(135deg, var(--primary-dark), #3a1fa0); }
+        .btn-outline-secondary { border-radius: 10px; }
+        .btn-success { border-radius: 10px; }
+
+        /* ── Result Card ── */
+        .result-card {
+            background: #f9f8ff; border: 1.5px solid #ede9fe;
+            border-radius: 14px; padding: 1.5rem; margin-top: 1rem;
+        }
+        .result-label { font-size: .78rem; font-weight: 700; text-transform: uppercase;
+            letter-spacing: 1px; color: var(--primary); margin-bottom: .4rem; }
+        .message-box {
+            background: #fff; border: 1.5px solid #e5e7eb; border-radius: 10px;
+            padding: 1rem 1.2rem; font-size: .95rem; line-height: 1.6;
+            word-break: break-word; white-space: pre-wrap; min-height: 60px;
+        }
+        .img-thumb { border-radius: 10px; border: 2px solid #ede9fe; max-height: 180px; object-fit: cover; }
+
+        /* ── Loading Overlay ── */
+        #loading-overlay {
+            display: none; position: fixed; inset: 0;
+            background: rgba(26,16,51,.75); z-index: 9999;
+            flex-direction: column; align-items: center; justify-content: center;
+            backdrop-filter: blur(4px);
+        }
+        #loading-overlay.active { display: flex; }
+        .spinner-ring {
+            width: 64px; height: 64px;
+            border: 5px solid rgba(255,255,255,.2);
+            border-top-color: #a78bfa;
+            border-radius: 50%; animation: spin .9s linear infinite;
+        }
+        @keyframes spin { to { transform: rotate(360deg); } }
+        #loading-overlay p { color: #ede9fe; font-size: 1.05rem; font-weight: 500; margin-top: 1.2rem; }
+
+        /* ── Alert ── */
+        .alert { border-radius: 12px; }
+
+        /* ── Footer ── */
+        footer {
+            text-align: center; padding: 2rem 0;
+            color: var(--text-muted-custom); font-size: .85rem;
+            border-top: 1px solid #ede9fe; margin-top: 3rem;
+        }
+    </style>
+</head>
+<body>
+
+<!-- Navbar -->
+<nav class="navbar navbar-expand-lg">
+    <div class="container">
+        <a class="navbar-brand" href="/">
+            <i class="bi bi-shield-lock-fill"></i> StegaVault
+        </a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navLinks">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navLinks">
+            <ul class="navbar-nav ms-auto">
+                <li class="nav-item"><a class="nav-link" href="/text/encode">Text→Image</a></li>
+                <li class="nav-item"><a class="nav-link" href="/image/encode">Image→Image</a></li>
+                <li class="nav-item"><a class="nav-link" href="/audio/encode">Text→Audio</a></li>
+                <li class="nav-item"><a class="nav-link" href="/video/encode">Text→Video</a></li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<!-- Loading Overlay -->
+<div id="loading-overlay">
+    <div class="spinner-ring"></div>
+    <p id="loading-msg">Processing, please wait…</p>
+</div>
+
+{% with messages = get_flashed_messages(with_categories=true) %}
+  {% if messages %}
+    <div class="container mt-3">
+      {% for category, message in messages %}
+        <div class="alert alert-{{ 'danger' if category == 'error' else 'warning' }} alert-dismissible fade show" role="alert">
+            <i class="bi bi-exclamation-triangle-fill me-2"></i>{{ message }}
+            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+        </div>
+      {% endfor %}
+    </div>
+  {% endif %}
+{% endwith %}
+
+{% block content %}{% endblock %}
+
+<footer>
+    <i class="bi bi-shield-lock text-primary me-1"></i> StegaVault — Hide secrets in plain sight
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+// Show loading overlay on form submit
+document.querySelectorAll('form[data-loading]').forEach(form => {
+    form.addEventListener('submit', () => {
+        const msg = form.dataset.loading || 'Processing, please wait…';
+        document.getElementById('loading-msg').textContent = msg;
+        document.getElementById('loading-overlay').classList.add('active');
+    });
+});
+
+// Styled file input
+document.querySelectorAll('.file-drop').forEach(wrapper => {
+    const input  = wrapper.querySelector('input[type="file"]');
+    const label  = wrapper.querySelector('.file-label');
+    const icon   = label.querySelector('i');
+    const span   = label.querySelector('span');
+    const defTxt = span.textContent;
+    const defIcon = icon.className;
+
+    input.addEventListener('change', () => {
+        if (input.files.length) {
+            label.classList.add('has-file');
+            icon.className = 'bi bi-check-circle-fill';
+            span.textContent = input.files[0].name;
+        } else {
+            label.classList.remove('has-file');
+            icon.className = defIcon;
+            span.textContent = defTxt;
+        }
+    });
+    label.addEventListener('click', () => input.click());
+});
+</script>
+{% block extra_scripts %}{% endblock %}
+</body>
+</html>

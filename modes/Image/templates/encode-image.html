@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+{% block title %}Encode Image → Image — StegaVault{% endblock %}
+{% block content %}
+<div class="container">
+  <div class="panel">
+    <nav aria-label="breadcrumb">
+      <ol class="breadcrumb mb-3">
+        <li class="breadcrumb-item"><a href="/">Home</a></li>
+        <li class="breadcrumb-item active">Image → Image Encode</li>
+      </ol>
+    </nav>
+    <div class="panel-title"><i class="bi bi-lock-fill"></i> Hide Image in Image</div>
+    <p class="text-muted mb-4">Upload a <strong>carrier</strong> image (stays visible) and a <strong>secret</strong> image (hidden inside it). The output looks identical to the carrier.</p>
+
+    <form action="/image/encode-result" method="POST" enctype="multipart/form-data"
+          data-loading="Encoding image… please wait">
+
+      <div class="mb-4">
+        <label class="form-label">🖼️ Carrier Image <span class="text-muted fw-normal">(the visible one)</span></label>
+        <div class="file-drop">
+          <input type="file" name="carrier" accept="image/*" required class="d-none">
+          <label class="file-label">
+            <i class="bi bi-image"></i>
+            <span>Click to choose carrier image</span>
+          </label>
+        </div>
+      </div>
+
+      <div class="mb-4">
+        <label class="form-label">🔒 Secret Image <span class="text-muted fw-normal">(to be hidden)</span></label>
+        <div class="file-drop">
+          <input type="file" name="secret" accept="image/*" required class="d-none">
+          <label class="file-label">
+            <i class="bi bi-file-image"></i>
+            <span>Click to choose secret image</span>
+          </label>
+        </div>
+      </div>
+
+      <div class="d-flex gap-3">
+        <button type="submit" class="btn btn-primary"><i class="bi bi-lock-fill me-2"></i>Encode</button>
+        <a href="/" class="btn btn-outline-secondary">Cancel</a>
+      </div>
+    </form>
+  </div>
+</div>
+{% endblock %}

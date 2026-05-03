@@ -1,0 +1,129 @@
+{% extends "base.html" %}
+{% block title %}StegaVault — Steganography Tool{% endblock %}
+
+{% block content %}
+<!-- Hero -->
+<div class="hero">
+    <div class="container">
+        <h1><i class="bi bi-shield-lock-fill me-2"></i>StegaVault</h1>
+        <p class="mt-2 mb-0">Hide secret messages inside images, audio, and video — invisibly.</p>
+    </div>
+</div>
+
+<div class="container py-5">
+    {% if error %}
+    <div class="alert alert-danger"><i class="bi bi-exclamation-triangle-fill me-2"></i>{{ error }}</div>
+    {% endif %}
+
+    <h4 class="text-center fw-700 mb-4" style="color:#1a1033; font-weight:700;">Choose a steganography mode</h4>
+
+    <div class="row g-4 justify-content-center">
+
+        <!-- Text → Image -->
+        <div class="col-sm-6 col-lg-3">
+            <div class="mode-card">
+                <div class="mode-icon"><span>📝</span></div>
+                <h5>Text → Image</h5>
+                <p>Embed a secret text message inside any PNG or JPG image using LSB encoding.</p>
+                <div class="d-grid gap-2 mt-3">
+                    <a href="/text/encode" class="btn btn-encode btn-sm">
+                        <i class="bi bi-lock-fill me-1"></i> Encode
+                    </a>
+                    <a href="/text/decode" class="btn btn-decode btn-sm">
+                        <i class="bi bi-unlock-fill me-1"></i> Decode
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Image → Image -->
+        <div class="col-sm-6 col-lg-3">
+            <div class="mode-card">
+                <div class="mode-icon"><span>🖼️</span></div>
+                <h5>Image → Image</h5>
+                <p>Conceal a secret image inside a carrier image using MSB/LSB pixel blending.</p>
+                <div class="d-grid gap-2 mt-3">
+                    <a href="/image/encode" class="btn btn-encode btn-sm">
+                        <i class="bi bi-lock-fill me-1"></i> Encode
+                    </a>
+                    <a href="/image/decode" class="btn btn-decode btn-sm">
+                        <i class="bi bi-unlock-fill me-1"></i> Decode
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Text → Audio -->
+        <div class="col-sm-6 col-lg-3">
+            <div class="mode-card">
+                <div class="mode-icon"><span>🎵</span></div>
+                <h5>Text → Audio</h5>
+                <p>Hide a text message in a WAV audio file by modifying the least significant bits.</p>
+                <div class="d-grid gap-2 mt-3">
+                    <a href="/audio/encode" class="btn btn-encode btn-sm">
+                        <i class="bi bi-lock-fill me-1"></i> Encode
+                    </a>
+                    <a href="/audio/decode" class="btn btn-decode btn-sm">
+                        <i class="bi bi-unlock-fill me-1"></i> Decode
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Text → Video -->
+        <div class="col-sm-6 col-lg-3">
+            <div class="mode-card">
+                <div class="mode-icon"><span>🎬</span></div>
+                <h5>Text → Video</h5>
+                <p>Embed a secret text message across the frames of an MP4 video file.</p>
+                <div class="d-grid gap-2 mt-3">
+                    <a href="/video/encode" class="btn btn-encode btn-sm">
+                        <i class="bi bi-lock-fill me-1"></i> Encode
+                    </a>
+                    <a href="/video/decode" class="btn btn-decode btn-sm">
+                        <i class="bi bi-unlock-fill me-1"></i> Decode
+                    </a>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- How it works -->
+    <div class="mt-5 pt-2">
+        <h5 class="text-center fw-bold mb-4" style="color:#1a1033;">How it works</h5>
+        <div class="row g-3 justify-content-center">
+            <div class="col-md-4">
+                <div class="d-flex gap-3 align-items-start">
+                    <div class="rounded-circle bg-primary text-white d-flex align-items-center justify-content-center flex-shrink-0"
+                         style="width:36px;height:36px;font-weight:700;">1</div>
+                    <div>
+                        <div class="fw-bold text-dark">Pick your mode</div>
+                        <div class="text-muted small">Choose whether to hide text or an image inside a carrier file.</div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="d-flex gap-3 align-items-start">
+                    <div class="rounded-circle bg-primary text-white d-flex align-items-center justify-content-center flex-shrink-0"
+                         style="width:36px;height:36px;font-weight:700;">2</div>
+                    <div>
+                        <div class="fw-bold text-dark">Upload & encode</div>
+                        <div class="text-muted small">Upload your carrier file and secret data, then hit Encode.</div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="d-flex gap-3 align-items-start">
+                    <div class="rounded-circle bg-primary text-white d-flex align-items-center justify-content-center flex-shrink-0"
+                         style="width:36px;height:36px;font-weight:700;">3</div>
+                    <div>
+                        <div class="fw-bold text-dark">Download & share</div>
+                        <div class="text-muted small">Download the steganographic file — it looks completely normal.</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

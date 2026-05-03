@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+{% block title %}Decode Video — StegaVault{% endblock %}
+{% block content %}
+<div class="container">
+  <div class="panel">
+    <nav aria-label="breadcrumb">
+      <ol class="breadcrumb mb-3">
+        <li class="breadcrumb-item"><a href="/">Home</a></li>
+        <li class="breadcrumb-item active">Text → Video Decode</li>
+      </ol>
+    </nav>
+    <div class="panel-title"><i class="bi bi-unlock-fill"></i> Extract Hidden Text from Video</div>
+    <p class="text-muted mb-4">Upload a StegaVault-encoded AVI video to extract the hidden secret message from its first frame.</p>
+
+    <form action="/video/decode-result" method="POST" enctype="multipart/form-data"
+          data-loading="Extracting message from video… please wait">
+
+      <div class="mb-4">
+        <label class="form-label">🎬 Encoded Video File</label>
+        <div class="file-drop">
+          <input type="file" name="video" accept="video/mp4,video/avi,video/quicktime,video/x-matroska" required class="d-none">
+          <label class="file-label">
+            <i class="bi bi-camera-video-fill"></i>
+            <span>Click to choose encoded AVI video</span>
+          </label>
+        </div>
+        <div class="form-text text-muted mt-1">Use the AVI file downloaded from the encode step.</div>
+      </div>
+
+      <div class="d-flex gap-3">
+        <button type="submit" class="btn btn-primary"><i class="bi bi-unlock-fill me-2"></i>Decode</button>
+        <a href="/" class="btn btn-outline-secondary">Cancel</a>
+      </div>
+    </form>
+  </div>
+</div>
+{% endblock %}
